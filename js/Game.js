@@ -2,6 +2,8 @@ var player;
 var cursors;
 var star;
 var groundLedge;
+var platforms;
+var platform;
 var MAX_SPEED_X = 200;
 var MAX_SPEED_Y = 700;
 var ACCELERATION = 1500;
@@ -20,6 +22,14 @@ BasicGame.Game.prototype = {
 		this.game.load.spritesheet('player', 'assets/images/player.png', 32, 48);
 		this.game.load.image('star', 'assets/images/star.png');
 		this.game.load.image('groundLedge', 'assets/images/groundLedge.png');
+		this.game.load.image('platform', 'assets/images/platform.png');
+
+	},
+
+	addPlatform: function (x, y) {
+		var temp;
+		this.temp = this.platforms.create(x, y, 'platform');
+		this.temp.body.immovable = true;
 
 	},
 
@@ -27,12 +37,21 @@ BasicGame.Game.prototype = {
 
 		this.game.physics.startSystem(Phaser.Physics.ARCADE);
 		// Background image
-		this.background = this.game.add.tileSprite(0, 0, 1920, 1920, 'background');
-		this.world.setBounds(0, 0, 1920, 800);
+		//this.background = this.game.add.tileSprite(0, 0, 1920, 1920, 'background');
+		this.world.setBounds(0, 0, 2920, 800);
 		// Ground ledge on which the player will run on it.
 		this.groundLedge = this.game.add.sprite(0, 770, 'groundLedge');
+		this.groundLedge.scale.setTo(3);
 		this.game.physics.arcade.enable(this.groundLedge);
 		this.groundLedge.body.immovable = true;
+
+		// Loading Platforms...
+		this.platforms = this.game.add.group();
+		this.platforms.enableBody = true;
+
+		this.addPlatform(600, 600);
+		this.addPlatform(800, 400);
+		this.addPlatform(1000, 500);
 
 		// Player attributes...
 		this.player = this.game.add.sprite(0, 700, 'player');
@@ -58,6 +77,7 @@ BasicGame.Game.prototype = {
 	update: function () {
 
 		this.game.physics.arcade.collide(this.player, this.groundLedge);
+		this.game.physics.arcade.collide(this.player, this.platforms);
 
 		if (this.cursors.left.isDown) {
 			this.player.animations.play('left');
