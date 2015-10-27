@@ -10,7 +10,9 @@ BasicGame.MainMenu = function (game) {
 
 BasicGame.MainMenu.prototype = {
 
-	preload: function () {},
+	preload: function () {
+
+	},
 
 	create: function () {
 
