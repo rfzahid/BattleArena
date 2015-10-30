@@ -8,7 +8,10 @@ BasicGame.Boot.prototype = {
 
 	init: function () {
 
+		// If multi-touch control is not used, then...
 		this.input.maxPointers = 1;
+
+		//  Disable pausing if the browser tab the game is in loses focus..
 		this.stage.disableVisibilityChange = true;
 
 		if (this.game.device.desktop) {
@@ -24,6 +27,8 @@ BasicGame.Boot.prototype = {
 
 	},
 	preload: function () {
+
+		// Load assets for showing loading screen to the user...
 		this.load.image('progressBar', 'assets/images/progressBar.png');
 		this.load.image('preloaderBackground', 'assets/images/preloaderBackground.png');
 		this.load.image('battleArenaLogo', 'assets/images/battleArenaLogo.png');
@@ -31,6 +36,8 @@ BasicGame.Boot.prototype = {
 
 	},
 	create: function () {
+
+		// Start loading screen(i.e preloader.js)
 		this.state.start('Preloader');
 	}
 };
