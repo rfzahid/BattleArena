@@ -1,3 +1,5 @@
+// Global variables declared here...
+
 var music;
 var playButton;
 var options;
@@ -16,12 +18,16 @@ BasicGame.MainMenu.prototype = {
 
 	create: function () {
 
+		// Adding items for Main Menu here...
 		this.preloaderBackground = this.add.image(this.game.world.centerX, this.game.world.centerY, 'preloaderBackground');
 		this.preloaderBackground.anchor.setTo(0.5);
 
+		// Music settings here...
 		this.music = this.add.audio('titleMusic');
 		this.music.loop = true;
 		this.music.play();
+
+		// Buttons needed for navigation
 
 		this.playButton = this.add.button(this.game.world.centerX, 200, 'playButton', this.startGame, this, 'buttonOver', 'buttonOut', 'buttonOver');
 		this.playButton.anchor.setTo(0.5);
@@ -39,16 +45,19 @@ BasicGame.MainMenu.prototype = {
 
 	},
 
+	// Start the actual game to play
 	startGame: function () {
 		this.music.stop();
 		this.state.start('Game');
 	},
 
+	// Start Options menu
 	startOptions: function () {
 		this.music.stop();
 		this.state.start('Options');
 	},
 
+	// Start Credits menu
 	startCredits: function () {
 		this.music.stop();
 		this.state.start('Credits');
