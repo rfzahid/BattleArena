@@ -21,6 +21,9 @@
 		var game;
 		window.onload = function () {
 			game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, 'gameContainer');
+
+			// Add all phases of the game as states here
+
 			game.state.add('Boot', BasicGame.Boot);
 			game.state.add('Preloader', BasicGame.Preloader);
 			game.state.add('MainMenu', BasicGame.MainMenu);
@@ -28,6 +31,7 @@
 			game.state.add('Options', BasicGame.Options);
 			game.state.add('Credits', BasicGame.Credits);
 
+			// Game starts with a call to Boot.js 
 			game.state.start('Boot');
 		}
 	</script>
