@@ -1,0 +1,83 @@
+[33mcommit 6512d3e595b61ea94f574c7286c046e33f4ab87d[m
+Author: Zahid Wakeel <zhdwkl@gmail.com>
+Date:   Fri Oct 30 19:06:58 2015 +0530
+
+    Updated
+
+[33mcommit b14c0c315f3a62704b3cc949c6f0da80a24d0afb[m
+Author: Zahid Wakeel <zhdwkl@gmail.com>
+Date:   Fri Oct 30 19:06:38 2015 +0530
+
+    Updated
+
+[33mcommit 24c617c86cd7d20197639a1e27e317619c9abeab[m
+Author: Zahid Wakeel <zhdwkl@gmail.com>
+Date:   Fri Oct 30 19:05:55 2015 +0530
+
+    Updated
+
+[33mcommit c242dda661cffb8a121c2cc4c152d7bdce0872f2[m
+Author: Zahid Wakeel <zhdwkl@gmail.com>
+Date:   Fri Oct 30 19:05:38 2015 +0530
+
+    Updated
+
+[33mcommit baf8a2a070e7a82715ad5e9196b6b9d80759c94d[m
+Author: Zahid Wakeel <zhdwkl@gmail.com>
+Date:   Fri Oct 30 19:05:16 2015 +0530
+
+    Updated
+
+[33mcommit 5a966276b08f98f5ca52544d843daf2d2d53b711[m
+Author: Zahid Wakeel <zhdwkl@gmail.com>
+Date:   Fri Oct 30 19:04:56 2015 +0530
+
+    Updated
+
+[33mcommit 2cbf3d7fbdd4f5fbe98895a9deab461eb7b6042c[m
+Author: Zahid Wakeel <zhdwkl@gmail.com>
+Date:   Fri Oct 30 19:04:29 2015 +0530
+
+    Updated
+
+[33mcommit 1ae7a9697d2cd904bf55378910c532dd3d1883a4[m
+Author: Zahid Wakeel <zhdwkl@gmail.com>
+Date:   Tue Oct 27 13:44:26 2015 +0530
+
+    Have to look for changes
+
+[33mcommit 3ecaf30b3ce9edb669421e04b99bb11ef80340dd[m
+Author: Zahid Wakeel <zhdwkl@gmail.com>
+Date:   Tue Oct 27 13:43:42 2015 +0530
+
+    Added 3 platforms + reset the background to black(default) + extended ground*3 times
+
+[33mcommit 79817e864cb4a471992de26fb2525b75368d9222[m
+Author: Zahid Wakeel <zhdwkl@gmail.com>
+Date:   Mon Oct 26 21:02:50 2015 +0530
+
+    Javascript files for implementing actual gameplay.
+
+[33mcommit e5510cbe3c989e551974a3a75cd2dcd3bbb1f8fc[m
+Author: Zahid Wakeel <zhdwkl@gmail.com>
+Date:   Mon Oct 26 20:58:53 2015 +0530
+
+    Styles folder for styling some elements of gameplay.
+
+[33mcommit df7c26738c9c382b95c4590781b548d29604f235[m
+Author: Zahid Wakeel <zhdwkl@gmail.com>
+Date:   Mon Oct 26 20:52:28 2015 +0530
+
+    Assets required for gameplay.
+
+[33mcommit a5c3409e93f6c58aff9712874394dfd26a1aec3a[m
+Author: Zahid Wakeel <zhdwkl@gmail.com>
+Date:   Mon Oct 26 20:50:58 2015 +0530
+
+    Main index page for rendering game.
+
+[33mcommit b61e34250df8fc3ccfbecf085e19778b27cc93bd[m
+Author: rfzahid <zhdwkl@gmail.com>
+Date:   Mon Oct 26 20:49:47 2015 +0530
+
+    Initial commit
