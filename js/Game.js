@@ -46,8 +46,9 @@ BasicGame.Game.prototype = {
         // Collisions...
 
         this.playerCollisionGroup = this.game.physics.p2.createCollisionGroup();
-        //ballCollisionGroup = this.game.physics.p2.createCollisionGroup();
+        this.ballCollisionGroup = this.game.physics.p2.createCollisionGroup();
         this.groundCollisionGroup = this.game.physics.p2.createCollisionGroup();
+        //this.game.physics.p2.updateBoundsCollisionGroup();
 
         // Ground ledge on which the player will run on it.
         this.groundLedge = this.game.add.sprite(this.game.world.width / 2, this.game.world.height, 'groundLedge');
@@ -55,15 +56,13 @@ BasicGame.Game.prototype = {
         this.groundLedge.body.kinematic = true;
         this.groundLedge.body.setCollisionGroup(this.groundCollisionGroup);
         this.groundLedge.body.collides(this.playerCollisionGroup, this.playerGroundCollision, this);
+        this.groundLedge.body.collides(this.ballCollisionGroup, this.ballgroundCollision, this);
 
         // Net chord settings...
 
         this.net = this.game.add.sprite((this.game.world.width / 2) - 5, this.game.world.height - 115, 'net');
         this.game.physics.p2.enable(this.net);
         this.net.body.static = true;
-
-
-        //this.game.physics.p2.updateBoundsCollisionGroup();
 
         // Player1 attributes...
 
@@ -95,8 +94,8 @@ BasicGame.Game.prototype = {
         //this.ball.smoothed = true;
         //this.ball.body.restitution = 0.8;
         this.ball.body.collideWorldBounds = true;
-        //this.ball.body.setCollisionGroup(this.ballCollisionGroup);
-        //this.ball.body.collides([this.ballCollisionGroup, this.playerCollisionGroup]);
+        this.ball.body.setCollisionGroup(this.ballCollisionGroup);
+        this.ball.body.collides(this.groundCollisionGroup, this.ballGroundCollision, this);
 
         // Player1 control settings...
 
@@ -111,8 +110,12 @@ BasicGame.Game.prototype = {
     },
 
     playerGroundCollision: function (body1, body2) {
-        console.log("Collided!");
+        console.log("Player/Ground Collision!");
         this.jump = true;
+    },
+
+    ballGroundCollision: function (body1, body2) {
+        console.log("Ball/Ground Collision!");
     },
 
     update: function () {
