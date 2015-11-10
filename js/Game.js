@@ -11,6 +11,7 @@ var jump;
 var playerCollisionGroup;
 var groundCollisionGroup;
 var ballCollisionGroup;
+var netCollisionGroup;
 
 var MAX_SPEED_X = 200;
 var MAX_SPEED_Y = 500;
@@ -48,7 +49,8 @@ BasicGame.Game.prototype = {
         this.playerCollisionGroup = this.game.physics.p2.createCollisionGroup();
         this.ballCollisionGroup = this.game.physics.p2.createCollisionGroup();
         this.groundCollisionGroup = this.game.physics.p2.createCollisionGroup();
-        //this.game.physics.p2.updateBoundsCollisionGroup();
+        this.netCollisionGroup = this.game.physics.p2.createCollisionGroup();
+        this.game.physics.p2.updateBoundsCollisionGroup();
 
         // Ground ledge on which the player will run on it.
         this.groundLedge = this.game.add.sprite(this.game.world.width / 2, this.game.world.height, 'groundLedge');
@@ -63,27 +65,14 @@ BasicGame.Game.prototype = {
         this.net = this.game.add.sprite((this.game.world.width / 2) - 5, this.game.world.height - 115, 'net');
         this.game.physics.p2.enable(this.net);
         this.net.body.static = true;
+        this.net.body.setCollisionGroup(this.netCollisionGroup);
+        this.net.body.collides(this.ballCollisionGroup, this.netBallCollision, this);
+        this.net.body.collides(this.playerCollisionGroup, this.playerNetCollision, this);
 
-        // Player1 attributes...
+        // Create two players...
 
-        this.player1 = this.game.add.sprite(100, this.game.world.height - 78, 'player');
-        this.game.physics.p2.enable(this.player1);
-        this.player1.body.fixedRotation = true;
-        this.player1.body.setCircle(24);
-        this.player1.animations.add('left', [0, 1, 2, 3], 10, true);
-        this.player1.animations.add('right', [5, 6, 7, 8], 10, true);
-        this.player1.body.setCollisionGroup(this.playerCollisionGroup);
-        this.player1.body.collides(this.groundCollisionGroup, this.playerGroundCollision, this);
-
-        this.player1.body.collideWorldBounds = true;
-
-        // Player2 attributes...
-
-        this.player2 = this.game.add.sprite(this.game.world.width - 100, this.game.world.height - 115, 'player');
-        this.game.physics.p2.enable(this.player2);
-        this.player2.body.fixedRotation = true;
-        this.player2.animations.add('left', [0, 1, 2, 3], 10, true);
-        this.player2.animations.add('right', [5, 6, 7, 8], 10, true);
+        this.player1 = this.createPlayer(this.player1, 100, this.game.world.height - 78);
+        this.player2 = this.createPlayer(this.player2, this.game.world.width - 100, this.game.world.height - 115);
 
         // Ball settings...
 
@@ -96,6 +85,8 @@ BasicGame.Game.prototype = {
         this.ball.body.collideWorldBounds = true;
         this.ball.body.setCollisionGroup(this.ballCollisionGroup);
         this.ball.body.collides(this.groundCollisionGroup, this.ballGroundCollision, this);
+        this.ball.body.collides(this.playerCollisionGroup, this.playerBallCollision, this);
+        this.ball.body.collides(this.netCollisionGroup, this.netBallCollision, this);
 
         // Player1 control settings...
 
@@ -109,6 +100,26 @@ BasicGame.Game.prototype = {
 
     },
 
+
+    createPlayer: function (player, x, y) {
+
+        this.player = this.game.add.sprite(x, y, 'player');
+        this.game.physics.p2.enable(this.player);
+        this.player.body.fixedRotation = true;
+        this.player.body.setCircle(24);
+
+        this.player.animations.add('left', [0, 1, 2, 3], 10, true);
+        this.player.animations.add('right', [5, 6, 7, 8], 10, true);
+
+        this.player.body.setCollisionGroup(this.playerCollisionGroup);
+        this.player.body.collides(this.groundCollisionGroup, this.playerGroundCollision, this);
+        this.player.body.collides(this.ballCollisionGroup, this.playerBallCollision, this);
+        this.player.body.collides(this.netCollisionGroup, this.playerNetCollision, this);
+
+        this.player.body.collideWorldBounds = true;
+        return this.player;
+    },
+
     playerGroundCollision: function (body1, body2) {
         console.log("Player/Ground Collision!");
         this.jump = true;
@@ -116,6 +127,18 @@ BasicGame.Game.prototype = {
 
     ballGroundCollision: function (body1, body2) {
         console.log("Ball/Ground Collision!");
+    },
+
+    playerBallCollision: function (body1, body2) {
+        console.log("Player/Ball Collision!");
+    },
+
+    netBallCollision: function (body1, body2) {
+        console.log("Net/Ball Collision!");
+    },
+
+    playerNetCollision: function (body1, body2) {
+        console.log("Player/Net Collision");
     },
 
     update: function () {
