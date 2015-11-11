@@ -39,10 +39,12 @@ BasicGame.Game.prototype = {
         this.game.physics.p2.setImpactEvents(true);
         this.stage.backgroundColor = '#999999';
 
-        this.game.physics.p2.gravity.y = 500;
+        this.game.physics.p2.gravity.y = 1000;
         //this.game.physics.p2.world.defaultContactMaterial.friction = 0.3;
         //this.game.physics.p2.world.setGlobalStiffness(1e5);
-        this.game.physics.p2.restitution = 0.7;
+        //this.game.physics.p2.restitution = 0.7;
+        //this.ballMaterial = thisgame.physics.p2.createMaterial('ballMaterial', this.ball.body);
+        //this.groundMaterial = this.game.physics.p2.createMaterial('groundMaterial', this.groundLedge.body);
 
         // Collisions...
 
@@ -56,6 +58,7 @@ BasicGame.Game.prototype = {
         this.groundLedge = this.game.add.sprite(this.game.world.width / 2, this.game.world.height, 'groundLedge');
         this.game.physics.p2.enable(this.groundLedge);
         this.groundLedge.body.kinematic = true;
+        //this.groundLedge.body.fixedRotation = true;
         this.groundLedge.body.setCollisionGroup(this.groundCollisionGroup);
         this.groundLedge.body.collides(this.playerCollisionGroup, this.playerGroundCollision, this);
         this.groundLedge.body.collides(this.ballCollisionGroup, this.ballgroundCollision, this);
@@ -81,7 +84,6 @@ BasicGame.Game.prototype = {
         this.game.physics.p2.enable(this.ball);
         this.ball.body.setCircle(16);
         //this.ball.smoothed = true;
-        //this.ball.body.restitution = 0.8;
         this.ball.body.collideWorldBounds = true;
         this.ball.body.setCollisionGroup(this.ballCollisionGroup);
         this.ball.body.collides(this.groundCollisionGroup, this.ballGroundCollision, this);
@@ -122,7 +124,7 @@ BasicGame.Game.prototype = {
 
     playerGroundCollision: function (body1, body2) {
         console.log("Player/Ground Collision!");
-        this.jump = true;
+        //this.jump = true;
     },
 
     ballGroundCollision: function (body1, body2) {
@@ -139,6 +141,20 @@ BasicGame.Game.prototype = {
 
     playerNetCollision: function (body1, body2) {
         console.log("Player/Net Collision");
+    },
+
+    touchingDown: function (someone) {
+        var yAxis = p2.vec2.fromValues(0, 1);
+        var result = false;
+        for (var i = 0; i < game.physics.p2.world.narrowphase.contactEquations.length; i++) {
+            var c = game.physics.p2.world.narrowphase.contactEquations[i]; // cycles through all the contactEquations until it finds our "someone"
+            if (c.bodyA === someone.body.data || c.bodyB === someone.body.data) {
+                var d = p2.vec2.dot(c.normalA, yAxis); // Normal dot Y-axis
+                if (c.bodyA === someone.body.data) d *= -1;
+                if (d > 0.5) result = true;
+            }
+        }
+        return result;
     },
 
     update: function () {
@@ -163,26 +179,19 @@ BasicGame.Game.prototype = {
             //this.player1.body.acceleration.x = 0;
             this.player1.body.velocity.x = 0;
         }
-        if (this.upButton.isDown && this.jump) {
+        if (this.upButton.isDown && this.touchingDown(this.player1)) {
             this.player1.body.velocity.y = -MAX_SPEED_Y;
         }
 
-        /*if (this.upButton.isDown && this.player1.body.touching.down) {
-            //this.player1.body.velocity.y = -MAX_SPEED_Y;
-            this.player1.body.moveUp(300);
-
-
-        }*/
-
         // Controls for sprite when in the air
 
-        /*if (!this.player1.body.touching.down) {
+        if (!this.touchingDown(this.player1)) {
             if (this.leftButton.isDown) {
                 this.player1.frame = 3;
             } else if (this.rightButton.isDown) {
                 this.player1.frame = 6;
             }
-        }*/
+        }
 
         // Player2 control handling...
         if (this.cursors.left.isDown) {
@@ -200,12 +209,21 @@ BasicGame.Game.prototype = {
         } else {
             this.player2.animations.stop();
             this.player2.frame = 4;
-            //this.player1.body.acceleration.x = 0;
             this.player2.body.velocity.x = 0;
         }
-        if (this.cursors.up.isDown) {
+
+        if (this.cursors.up.isDown && this.touchingDown(this.player2)) {
             this.player2.body.velocity.y = -MAX_SPEED_Y;
         }
+
+        if (!this.touchingDown(this.player2)) {
+            if (this.cursors.left.isDown) {
+                this.player2.frame = 3;
+            } else if (this.cursors.right.isDown) {
+                this.player2.frame = 6;
+            }
+        }
+
     }
 
 };
