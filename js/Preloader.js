@@ -46,6 +46,9 @@ BasicGame.Preloader.prototype = {
 		this.game.load.image('groundLedge', 'assets/images/groundLedge.png');
 		this.game.load.image('net', 'assets/images/net.png');
 		this.game.load.image('ball', 'assets/images/ball.png');
+		this.game.load.image('background', 'assets/images/background.png');
+		this.game.load.audio('crowd', 'assets/sounds/crowd.wav');
+		this.game.load.audio('playerTouchBall', 'assets/sounds/playerTouchBall.wav');
 	},
 
 	create: function () {
@@ -57,7 +60,7 @@ BasicGame.Preloader.prototype = {
 
 	// Wait for the music to decode completely before proceeding to next state...
 	update: function () {
-		if (this.cache.isSoundDecoded('titleMusic') && this.ready == false) {
+		if (this.cache.isSoundDecoded('titleMusic') && this.cache.isSoundDecoded('crowd') && this.cache.isSoundDecoded('playerTouchBall') && this.ready == false) {
 
 			this.ready = true;
 			this.state.start('MainMenu');
