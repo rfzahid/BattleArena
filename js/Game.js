@@ -11,6 +11,9 @@
  var background;
  var net;
  var ball;
+ var counter;
+ var playerBallMusic;
+ var crowdMusic;
 
  var playerCollisionGroup;
  var groundCollisionGroup;
@@ -49,10 +52,19 @@
 
  	create: function () {
 
+ 		//this.game.add.plugin(Phaser.Plugin.Debug);
+
  		this.game.physics.startSystem(Phaser.Physics.P2JS);
  		this.game.physics.p2.setImpactEvents(true);
- 		this.stage.backgroundColor = '#999999';
+ 		this.background = this.game.add.sprite(0, 0, 'background');
  		this.game.physics.p2.gravity.y = 800;
+
+ 		// Music for main game...
+
+ 		this.crowdMusic = this.add.audio('crowd');
+ 		this.crowdMusic.loop = true;
+ 		this.crowdMusic.play();
+ 		this.playerBallMusic = this.add.audio('playerTouchBall');
 
  		// Collisions...
 
@@ -141,7 +153,7 @@
  		// Ball/Player collision settings here...
 
  		this.ballPlayerContactMaterial = this.game.physics.p2.createContactMaterial(this.ballMaterial, this.playerMaterial);
- 		this.ballPlayerContactMaterial.restitution = 0.8;
+ 		//this.ballPlayerContactMaterial.restitution = 0.8;
 
  		// Ball/Net collision settings here...
 
@@ -207,6 +219,8 @@
  	playerBallCollision: function (body1, body2) {
  		console.log("Player/Ball Collision!");
  		this.ball.body.velocity.y = -700;
+ 		console.log(Phaser.Math.angleBetween(this.player1, this.ball));
+ 		this.playerBallMusic.play();
  	},
 
  	netBallCollision: function (body1, body2) {
@@ -236,6 +250,7 @@
  		}
  		return result;
  	},
+
 
  	update: function () {
 
